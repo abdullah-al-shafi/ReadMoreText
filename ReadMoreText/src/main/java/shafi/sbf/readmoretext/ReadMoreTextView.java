@@ -23,6 +23,9 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
     private int trimLength;
     private int readMoreColor;
     private int showLessColor;
+    // Customizable text for collapsed and expanded state
+    private String readMoreText = " Read More"; // Default text
+    private String showLessText = " Show Less"; // Default text
 
     public ReadMoreTextView(Context context) {
         super(context);
@@ -95,7 +98,7 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
     // Helper method to create trimmed text with "Read More" clickable span
     private SpannableString createSpannableTrimmedText() {
         String subText = fullText.substring(0, trimLength);
-        String trimmed = subText + ELLIPSIS + " Read More";
+        String trimmed = subText + ELLIPSIS + readMoreText;
         SpannableString spannableString = new SpannableString(trimmed);
 
         // Apply bold and color to "Read More"
@@ -109,7 +112,7 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
 
     // Helper method to create full text with "Show Less" clickable span
     private SpannableString createSpannableShowLessText() {
-        String full = fullText + " Show Less";
+        String full = fullText + showLessText;
         SpannableString spannableString = new SpannableString(full);
 
         // Apply bold and color to "Show Less"
@@ -126,6 +129,22 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
         this.trimLength = length;
         if (fullText != null) {
             setTrimmedText(fullText); // Reapply the text with new trim length
+        }
+    }
+
+    // Set the custom "Read More" text
+    public void setReadMoreText(String readMoreText) {
+        this.readMoreText = readMoreText;
+        if (!isExpanded && fullText != null) {
+            setTrimmedText(fullText); // Update the trimmed text
+        }
+    }
+
+    // Set the custom "Show Less" text
+    public void setShowLessText(String showLessText) {
+        this.showLessText = showLessText;
+        if (isExpanded && fullText != null) {
+            setText(createSpannableShowLessText()); // Update the expanded text
         }
     }
 }
