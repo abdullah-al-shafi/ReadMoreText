@@ -103,9 +103,9 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
 
         // Apply bold and color to "Read More"
         spannableString.setSpan(new ForegroundColorSpan(readMoreColor),
-                trimmed.length() - 9, trimmed.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                trimmed.length() - readMoreText.length(), trimmed.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
-                trimmed.length() - 9, trimmed.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                trimmed.length() - readMoreText.length(), trimmed.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return spannableString;
     }
@@ -117,9 +117,9 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
 
         // Apply bold and color to "Show Less"
         spannableString.setSpan(new ForegroundColorSpan(showLessColor),
-                full.length() - 10, full.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                full.length() - showLessText.length(), full.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
-                full.length() - 10, full.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                full.length() - showLessText.length(), full.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return spannableString;
     }
