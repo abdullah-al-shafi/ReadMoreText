@@ -97,15 +97,27 @@ public class ReadMoreTextView extends androidx.appcompat.widget.AppCompatTextVie
 
     // Helper method to create trimmed text with "Read More" clickable span
     private SpannableString createSpannableTrimmedText() {
-        String subText = fullText.substring(0, trimLength);
+        if (fullText == null || fullText.isEmpty()) {
+            throw new IllegalStateException("fullText cannot be null or empty");
+        }
+
+        // Ensure trimLength does not exceed the fullText length
+        int safeTrimLength = Math.min(trimLength, fullText.length());
+        String subText = fullText.substring(0, safeTrimLength);
+
+        // Handle edge cases where fullText is too short for ELLIPSIS and readMoreText
+        if (safeTrimLength + ELLIPSIS.length() + readMoreText.length() > fullText.length()) {
+            return new SpannableString(fullText);
+        }
+
         String trimmed = subText + ELLIPSIS + readMoreText;
         SpannableString spannableString = new SpannableString(trimmed);
 
         // Apply bold and color to "Read More"
-        spannableString.setSpan(new ForegroundColorSpan(readMoreColor),
-                trimmed.length() - readMoreText.length(), trimmed.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
-                trimmed.length() - readMoreText.length(), trimmed.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        int start = trimmed.length() - readMoreText.length();
+        int end = trimmed.length();
+        spannableString.setSpan(new ForegroundColorSpan(readMoreColor), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return spannableString;
     }
